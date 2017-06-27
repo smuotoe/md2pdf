@@ -12,14 +12,14 @@ class Document(object):
         self._html_file_name = None
         self._stylesheet = stylesheet
 
-    @staticmethod
-    def from_markdown(md_file, stylesheet=None):
+    @classmethod
+    def from_markdown(cls, md_file, stylesheet=None):
         md_file = Path(md_file)
         assert md_file.is_file()
         if stylesheet is not None:
             stylesheet = Path(stylesheet)
         with md_file.open() as f:
-            return Document(
+            return cls(
                 markdown2.markdown(f.read(), extras=["tables"]),
                 md_file,
                 stylesheet
