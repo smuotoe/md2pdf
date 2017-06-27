@@ -3,6 +3,16 @@ import os.path
 from subprocess import call
 from pathlib import Path
 
+#
+# markdown2 extras:
+# https://github.com/trentm/python-markdown2/wiki/Extras
+#
+DEFAULT_MARKDOWN_EXTRAS = [
+    "tables",
+    "footnotes",
+    "fenced-code-blocks"
+]
+
 
 class Document(object):
 
@@ -13,14 +23,14 @@ class Document(object):
         self._stylesheet = stylesheet
 
     @classmethod
-    def from_markdown(cls, md_file, stylesheet=None):
+    def from_markdown(cls, md_file, stylesheet=None, extras=DEFAULT_MARKDOWN_EXTRAS):
         md_file = Path(md_file)
         assert md_file.is_file()
         if stylesheet is not None:
             stylesheet = Path(stylesheet)
         with md_file.open() as f:
             return cls(
-                markdown2.markdown(f.read(), extras=["tables"]),
+                markdown2.markdown(f.read(), extras=extras),
                 md_file,
                 stylesheet
             )
