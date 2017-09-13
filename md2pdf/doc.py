@@ -71,8 +71,9 @@ class Document(object):
         pdf_file_name = self.pdf_file_name if pdf_file_name is None else pdf_file_name
         call(["wkhtmltopdf",
               "-q",
-              "--title", self._file_name.name,
-              self.html_file_name,
-              pdf_file_name])
+              "--title",
+              self._file_name.name,
+              str(self.html_file_name),
+              str(pdf_file_name)])
         if not keep_html:
             self.html_file_name.unlink()
