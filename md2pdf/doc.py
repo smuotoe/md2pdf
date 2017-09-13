@@ -58,13 +58,14 @@ class Document(object):
         return self._file_name.with_suffix('.pdf')
 
     def save_to_html(self):
-        self.html_file_name.write_text(self.template.format(
-            **{
-                'title': self._file_name.name,
-                'body': self._body,
-                'style': self.stylesheet
-            }
-        ))
+        with self.html_file_name.open(mode='w') as f:
+            f.write(self.template.format(
+                **{
+                    'title': self._file_name.name,
+                    'body': self._body,
+                    'style': self.stylesheet
+                }
+            ))
 
     def save_to_pdf(self, pdf_file_name=None, keep_html=False):
         self.save_to_html()
